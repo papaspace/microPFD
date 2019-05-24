@@ -7,7 +7,7 @@ The microPFD software is a tiny but functional Primary Flight Display (PFD) for 
 
 
 ## Installation and Usage
-To install the software, download the iOS Pythonita 3 App to your iOS device (iPhone or iPad). Import the files on this GitHub repository and run the Main.py script.
+To install the software, download the iOS Pythonista 3 App to your iOS device (iPhone or iPad). Import the files on this GitHub repository and run the Main.py script.
 
 Usage:
 1. Tap the digital heading display to switch to GPS track.
