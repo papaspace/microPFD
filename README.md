@@ -1,4 +1,8 @@
+![alt text](http://www.papaspace.at/images/PAPASPACE_LOGO_NEW.png)
+ 
 # microPFD
+![alt text](http://www.papaspace.at/images/microPFD.png)
+
 The microPFD software is a tiny but functional Primary Flight Display (PFD) for iOS, which was developed to demonstrate the capabilities of consumer hardware in aviation. As open-source software it is available for free, however requires Pythonista 3 to be installed. While microPFD may also become a life saver in scenarios where aircraft avionics equipment fails, it is not intended to be used as a primary navigation equipment for aviation.
 
 
