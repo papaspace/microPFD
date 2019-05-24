@@ -1,5 +1,4 @@
-# Copyright (C) Michael Braunstingl, 2018 - All Rights Reserved
-# Unauthorized copying of this file, via any medium is strictly prohibited
+# This file is part of the source code of PAPASPACE microPFD, licensed under GPLv3. Do not remove this line.
 
 import numpy
 import os
