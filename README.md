@@ -7,12 +7,35 @@ The microPFD software is a tiny but functional Primary Flight Display (PFD) for 
 
 
 ## Installation and Usage
-To install the software, download the iOS Pythonista 3 App to your iOS device (iPhone or iPad). Import the files on this GitHub repository and run the Main.py script.
+Installation:
+1. Download the iOS App Pythonista 3 to your iOS device (iPhone or iPad).
+2. Open Pythonista 3, go to the 'Settings' menu and select 'Default Interpreter: Python 2.7'
+3. Make a new script (e.g. 'pfd_installer.py'), and copy-paste the following code:
+```
+import urllib, os
 
-Usage:
-1. Tap the digital heading display to switch to GPS track.
-2. Tap the digital waypoint information display to make a direct-to leg by entering a 4 letter ICAO airport code.
-3. Tap the cross in the top-right corner to exit microPFD and return to the Pythonista console.
+print('Starting download of microPFD. This may take some time.') if not os.path.exists('microPFD'):
+	os.makedirs('microPFD')
+if not os.path.exists('microPFD/navdata'):
+	os.makedirs('microPFD/navdata')
+
+gitrepo='https://raw.githubusercontent.com/papaspace/microPFD/master/microPFD/'
+files=['Main.py', 'symbolgen.py', 'navutil.py', 'navdata/airports.csv'] for file in files:
+	print '  Downloading file: '+str(file)
+	fid=urllib.urlopen(gitrepo+file)
+	fout=open('microPFD/'+file,'w')
+	fout.write(fid.read().decode('utf-8'))
+	fout.close()
+print('Done')
+```
+
+4. Run the script by pressing the play button (triangle). A folder named 'microPFD' will be created, the program and database will be downloaded.
+
+Usage and Help:
+1. Run the script 'microPFD/Main.py'
+2. Tap the digital heading display to switch to GPS track.
+3. Tap the digital waypoint information display to make a direct-to leg by entering a 4 letter ICAO airport code.
+4. Tap the cross in the top-right corner to exit microPFD and return to the Pythonista console.
 
 ## Liability Disclaimer
 This program is provided as is, without any representation or warranty of any kind, either expressed or implied, including without any limitation any representations or endorsements regarding the use of, the results of, or performance of the product, its appropriateness, accuracy, reliability, or correctness. The entire risk as to the use of this product is assumed by the user. The owners do not assume liability for the use of this program. In no event will the owners be liable for direct or indirect damages including any lost profits, lost savings, or other incidental or consequential damages arising from any defects, or the use, or inability to use this program, even if the owners have been advised of the possibility of such damages.
