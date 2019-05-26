@@ -30,7 +30,7 @@ for file in files:
 print 'Done' 
 ```
 
-4. Run the script by tapping the wrench icon and selecting 'Run Options...', 'Run with Python 2.7'.
+3. Run the script by tapping the wrench icon and selecting 'Run Options...', 'Run with Python 2.7'.
    A folder named 'microPFD' will be created, the program and database will be downloaded.
 
 Usage and Help:
