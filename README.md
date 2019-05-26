@@ -9,8 +9,7 @@ The microPFD software is a tiny but functional Primary Flight Display (PFD) for 
 ## Installation and Usage
 Installation:
 1. Download the iOS App Pythonista 3 to your iOS device (iPhone or iPad).
-2. Open Pythonista 3, go to the 'Settings' menu and select 'Default Interpreter: Python 2.7'
-3. Make a new script (e.g. 'pfd_installer.py'), and copy-paste the following code:
+2. Make a new script (e.g. 'pfd_installer.py'), and copy-paste the following code:
 ```
 import urllib, os
 
@@ -31,10 +30,11 @@ for file in files:
 print 'Done' 
 ```
 
-4. Run the script by pressing the play button (triangle). A folder named 'microPFD' will be created, the program and database will be downloaded.
+4. Run the script by tapping the wrench icon and selecting 'Run Options...', 'Run with Python 2.7'.
+   A folder named 'microPFD' will be created, the program and database will be downloaded.
 
 Usage and Help:
-1. Run the script 'microPFD/Main.py'
+1. Run the script 'microPFD/Main.py' with Python 2.7.
 2. Tap the digital heading display to switch to GPS track.
 3. Tap the digital waypoint information display to make a direct-to leg by entering a 4 letter ICAO airport code.
 4. Tap the cross in the top-right corner to exit microPFD and return to the Pythonista console.
