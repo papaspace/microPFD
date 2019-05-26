@@ -14,19 +14,21 @@ Installation:
 ```
 import urllib, os
 
-print('Starting download of microPFD. This may take some time.') if not os.path.exists('microPFD'):
+print 'Starting download of microPFD. This may take some time.'
+if not os.path.exists('microPFD'):
 	os.makedirs('microPFD')
 if not os.path.exists('microPFD/navdata'):
 	os.makedirs('microPFD/navdata')
 
 gitrepo='https://raw.githubusercontent.com/papaspace/microPFD/master/microPFD/'
-files=['Main.py', 'symbolgen.py', 'navutil.py', 'navdata/airports.csv'] for file in files:
+files=['Main.py', 'symbolgen.py', 'navutil.py', 'navdata/airports.csv']
+for file in files:
 	print '  Downloading file: '+str(file)
 	fid=urllib.urlopen(gitrepo+file)
 	fout=open('microPFD/'+file,'w')
 	fout.write(fid.read().decode('utf-8'))
 	fout.close()
-print('Done')
+print 'Done' 
 ```
 
 4. Run the script by pressing the play button (triangle). A folder named 'microPFD' will be created, the program and database will be downloaded.
