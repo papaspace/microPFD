@@ -1,4 +1,12 @@
-# This file is part of the source code of PAPASPACE microPFD, licensed under GPLv3. Do not remove this line.
+# Do not remove the license terms and original author:
+#
+# This software is licensed under CC BY-NC-SA 4.0
+# (Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International)
+# See: https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode
+#
+# Original author:
+#   Michael Braunstingl, 2018-2019
+#   m.braunstingl[at]papaspace.at
 
 from scene import *
 import numpy
