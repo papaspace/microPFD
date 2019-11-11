@@ -43,5 +43,11 @@ Usage and Help:
 This program is provided as is, without any representation or warranty of any kind, either expressed or implied, including without any limitation any representations or endorsements regarding the use of, the results of, or performance of the product, its appropriateness, accuracy, reliability, or correctness. The entire risk as to the use of this product is assumed by the user. The owners do not assume liability for the use of this program. In no event will the owners be liable for direct or indirect damages including any lost profits, lost savings, or other incidental or consequential damages arising from any defects, or the use, or inability to use this program, even if the owners have been advised of the possibility of such damages.
 
 ## Licensing
-The microPFD software was originally written by Michael Braunstingl, 2018-2019. The software is licensed under the open source GPLv3 license. The navigation database was originally downloaded from http://ourairports.com/data/.
+This software is licensed under CC BY-NC-SA 4.0
+Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+See: https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode
+
+Original author: Michael Braunstingl, 2018-2019 (m.braunstingl[at]papaspace.at)
+
+The navigation database was originally downloaded from http://ourairports.com/data/.
 
