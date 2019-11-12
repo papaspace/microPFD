@@ -467,7 +467,7 @@ class scale:
 
 class button:
 	def __init__(self,name,w,h):
-		self.symbol=ShapeNode(ui.Path.rect(0,0,w,h), "#646464", "#323232")
+		self.symbol=ShapeNode(ui.Path.rect(0,0,w,h), "#323232", "#646464")
 		self.symbol.anchor_point=(0.5,0.5)
 	
 		self.lbl=LabelNode(name)
@@ -488,34 +488,55 @@ class scratchpad:
 	def __init__(self,pfd,w,h):
 		self.pfd=pfd
 		node=Node()
-		bw=w/10
+		bw=w/6.0
 		x=bw/2.0
 		
 		self.bbox=bbox(0,0,w,h)
 		self.buttons=list()
 		
-		for ii,name in enumerate(["0","1","2","3","4","5","6","7","8","9"]):
+		for ii,name in enumerate(["0","1","2","3","4"]):
+			x=(ii+0.5)*bw
+			b=button(name,bw,bw)
+			b.symbol.position=(x,6.5*bw)
+			node.add_child(b.symbol)
+			self.buttons.append(b)
+			
+		for ii,name in enumerate(["5","6","7","8","9"]):
+			x=(ii+0.5)*bw
+			b=button(name,bw,bw)
+			b.symbol.position=(x,5.5*bw)
+			node.add_child(b.symbol)
+			self.buttons.append(b)
+		
+		for ii,name in enumerate(["A","B","C","D","E","F"]):
+			x=(ii+0.5)*bw
+			b=button(name,bw,bw)
+			b.symbol.position=(x,4.5*bw)
+			node.add_child(b.symbol)
+			self.buttons.append(b)
+		
+		for ii,name in enumerate(["G","H","I","J","K","L"]):
 			x=(ii+0.5)*bw
 			b=button(name,bw,bw)
 			b.symbol.position=(x,3.5*bw)
 			node.add_child(b.symbol)
 			self.buttons.append(b)
-		
-		for ii,name in enumerate(["A","B","C","D","E","F","G","H","I","J"]):
+			
+		for ii,name in enumerate(["M","N","O","P","Q","R"]):
 			x=(ii+0.5)*bw
 			b=button(name,bw,bw)
 			b.symbol.position=(x,2.5*bw)
 			node.add_child(b.symbol)
 			self.buttons.append(b)
-			
-		for ii,name in enumerate(["K","L","M","N","O","P","Q","R","S","T"]):
+		
+		for ii,name in enumerate(["S","T","U","V","W","X"]):
 			x=(ii+0.5)*bw
 			b=button(name,bw,bw)
 			b.symbol.position=(x,1.5*bw)
 			node.add_child(b.symbol)
 			self.buttons.append(b)
 		
-		for ii,name in enumerate(["U","V","W","X","Y","Z",".","-"]):
+		for ii,name in enumerate(["Y","Z",".","-","/"]):
 			x=(ii+0.5)*bw
 			b=button(name,bw,bw)
 			b.symbol.position=(x,0.5*bw)
@@ -523,19 +544,19 @@ class scratchpad:
 			self.buttons.append(b)
 		
 		self.delete=button("DEL",bw,bw)
-		self.delete.symbol.position=(8.5*bw,0.5*bw)
+		self.delete.symbol.position=(5.5*bw,0.5*bw)
 		self.delete.lbl.font=font_14
 		node.add_child(self.delete.symbol)
 		
-		self.enter=button("OK",bw,bw)
-		self.enter.symbol.position=(9.5*bw,0.5*bw)
+		self.enter=button("E\nX\nE\nC",bw,2.0*bw)
+		self.enter.symbol.position=(5.5*bw,6.0*bw)
 		self.enter.lbl.font=font_14
 		node.add_child(self.enter.symbol)
 		
 		# Text field
 		symbol=ShapeNode(ui.Path.rect(0,0,w-1,32), "#161616", "#00ccff")
 		symbol.anchor_point=(0.0,0.5)
-		symbol.position=(0.0,4.5*bw)
+		symbol.position=(0.0,7.0*bw+16)
 		
 		self.lbl=LabelNode("")
 		self.lbl.color="#00ccff"
