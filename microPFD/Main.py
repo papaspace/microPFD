@@ -32,13 +32,11 @@ class PFD(scene.Scene):
 	def setup(self):
 		color_gps="#2299ff"
 		self.background_color="#161616"
-		
 		self.scrw=numpy.min([440,self.size.w])
 		self.scrh=self.size.h/self.size.w*self.scrw
 		self.scale=self.size.h/self.scrh
 		
-		
-		self.adiCenter=[self.scrw/2.0, self.scrh-155]
+		self.adiCenter=[self.scrw/2.0, self.scrh*0.7]
 		self.pxPerDeg=10
 		
 		self.hdg_mode=True
@@ -49,17 +47,15 @@ class PFD(scene.Scene):
 		ADI.position=self.adiCenter
 		
 		# Attitude pitch marks
-		#self.pitchMarks=scene.SpriteNode("IMG_2130.JPG")
-		
 		self.pitchMarks=sg.adi_pitchBars(self.pxPerDeg)
 		ADI.add_child(self.pitchMarks)
-		self.rollPointer=sg.adi_rollPointer(150)
+		self.rollPointer=sg.adi_rollPointer(130)
 		ADI.add_child(self.rollPointer)
-		self.yawPointer=sg.adi_yawPointer(150)
+		self.yawPointer=sg.adi_yawPointer(130)
 		ADI.add_child(self.yawPointer)
 		
 		ADI.add_child(sg.adi_ac())
-		ADI.add_child(sg.adi_rollMarks(150))
+		ADI.add_child(sg.adi_rollMarks(130))
 		
 		
 		# Location labels
@@ -80,7 +76,7 @@ class PFD(scene.Scene):
 		self.lbl_lon.color=color_gps
 		locationNode.add_child(self.lbl_lon)
 		
-		adi_height=280
+		adi_height=self.scrh*0.5
 		hsi_height=self.scrh-adi_height
 		altNode=scene.ShapeNode(scene.ui.Path.rect(0,0,self.scrw+1,self.scrh-adi_height), "#000000", parent=self)
 		altNode.anchor_point=(0.0,0.0)
@@ -117,7 +113,9 @@ class PFD(scene.Scene):
 		self.wpt_dsp.position=[0,hsi_height]
 		
 		self.wpt=""
-		self.scratchpad=sg.scratchpad(self,self.scrw,128)
+		
+		# Init Scratchpad
+		self.scratchpad=sg.scratchpad(self,self.scrw,self.scrh)
 		
 		# G meter
 		[g_symbol,self.txt_g]=sg.g_display(ADI)
@@ -134,7 +132,6 @@ class PFD(scene.Scene):
 		if not self.isInit:
 			print("Waiting for init")
 			return
-		
 		
 		GRAV=motion.get_gravity()
 		#GRAV=numpy.add(motion.get_gravity(), motion.get_user_acceleration())
@@ -172,12 +169,14 @@ class PFD(scene.Scene):
 			
 			# Altitude display...
 			# hundreds
+			self.txt_alth.color="#ff00ff"
 			self.txt_alth.text="%01d"%((LOC["altitude"]/0.3048)/100.0)
 			# decis
 			self.txt_altd.text="%02d"%((LOC["altitude"]/0.3048)%100.0)
 			
 			# Ground speed display
 			gs=LOC["speed"]*3.6/1.852
+			self.txt_spd.color="#ff00ff"
 			if gs<0.0:
 				self.txt_spd.text="--"
 			else:
@@ -185,6 +184,15 @@ class PFD(scene.Scene):
 			
 			self.pos_geo=[LOC["altitude"],numpy.deg2rad(LOC["longitude"]),numpy.deg2rad(LOC["latitude"])]
 			self.pos_cart=navutil.geo2cart(self.pos_geo)
+		else:
+			self.txt_spd.text="GS"
+			self.txt_spd.color="#ff0000"
+			self.txt_alth.text="ALT"
+			self.txt_alth.color="#ff0000"
+			self.txt_altd.text=""
+			self.txt_hdg.text="TRK"
+			self.txt_hdg.color="#ff0000"
+			return
 			
 		# HSI...
 		self.txt_g.text="%2.1f"%(numpy.linalg.norm(GRAV+FORCE))
@@ -213,7 +221,7 @@ class PFD(scene.Scene):
 			if (dist/1852.0<10.0):
 				fmt_dist="%0.1f"
 			self.wpt_dist.text=fmt_dist%(dist/1852.0)
-			self.wpt_dtk.text="%03d"%numpy.rad2deg(dtk)
+			self.wpt_dtk.text="%03d"%numpy.rad2deg(self.dtk)
 			
 			
 			self.cdi_needle.rotation=-self.dtk
@@ -228,16 +236,13 @@ class PFD(scene.Scene):
 	def scratchpad_event(self,evt,txt):
 		if evt=="ENTER":
 			try:
-				self.wpt=navutil.find_by_ident(txt)
+				wptid=txt
+				self.wpt=navutil.find_by_ident(wptid)
 				self.wpt_name.text=self.wpt.ident
 				self.wpt_geo=self.wpt.geo_pos
 				self.wpt_cart=navutil.geo2cart(self.wpt_geo)
-				
-				[self.dist,self.dtk]=navutil.great_circle(self.pos_cart,self.wpt_cart)
+				self.cdi_needle.remove_from_parent()
 				self.scratchpad.symbol.remove_from_parent()
-				self.rose.add_child(self.cdi_needle)
-				
-				
 				
 				print("ELEV "+str(int(self.wpt.geo_pos[0]/0.3048))+" ft, "+self.wpt.name)
 			except:
@@ -249,8 +254,16 @@ class PFD(scene.Scene):
 				self.wpt_name.text=""
 				self.wpt_dtk.text="---"
 				self.wpt_dist.text="---"
-				self.cdi_needle.remove_from_parent()
+				
+			try:
+				[self.dist,self.dtk]=navutil.great_circle(self.pos_cart,self.wpt_cart)
 				self.scratchpad.symbol.remove_from_parent()
+				self.rose.add_child(self.cdi_needle)
+				
+			except:
+				print "EXCEPTION: CANNOT CALC DIRECT TO"
+				
+			
 	
 	def stop(self):
 		location.stop_updates()
@@ -258,13 +271,16 @@ class PFD(scene.Scene):
 		
 	def touch_began(self,touch):
 		s=sg.scale(self.scrw/self.size.w,self.scrh/self.size.h)
-		if sg.is_touched(self.hdg_symbol,touch,s):
+		
+		if self.scratchpad.symbol.parent==self and sg.is_touched(self.scratchpad,touch,s):
+			self.scratchpad.on_touch(touch,s)
+			
+		elif sg.is_touched(self.hdg_symbol,touch,s):
 			self.hdg_mode=not self.hdg_mode
 			
 		elif sg.is_touched(self.wpt_dsp,touch,s):
 			self.add_child(self.scratchpad.symbol)
-		elif self.scratchpad.symbol.parent==self and sg.is_touched(self.scratchpad,touch,s):
-			self.scratchpad.on_touch(touch,s)
+		
 			
 
 		
